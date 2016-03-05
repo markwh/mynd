@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 """
-This module provides functions to merge mindmap trees.
+A command-line tool to merge completed tasks from a Freeplane/Docear to-do list.
 """
 
 import os, os.path, sys
@@ -14,6 +14,10 @@ def isChecked(node):
     return node.find("./icon[@BUILTIN='checked']") is not None
 
 def modifyDetails(node, newtext):
+    """
+    Add an html <p>newtext</p> entry in details of node
+    This is added before any existing html <p></p> entries
+    """
     deets = node.find('richcontent[@TYPE="DETAILS"]')
     print deets
     if deets is None:
@@ -30,6 +34,10 @@ def modifyDetails(node, newtext):
     return node
 
 def pruneTree(tree, treename):
+    """
+    Recursive function that removes any branches that do not conatin a checked
+    node.
+    """
     if isChecked(tree):
         # Add details about when was first checked
         tree = modifyDetails(tree, "Completed in: " + treename)
@@ -48,7 +56,36 @@ def pruneTree(tree, treename):
         return None
     return tree
 
+def pruneChecked(tree):
+    """
+    Like pruneTree, but instead of keeping all checked nodes, this instead
+    removes them.
+    """
+    # if isChecked(tree):
+    #     # Add details about when was first checked
+    #     tree = modifyDetails(tree, "Completed in: " + treename)
+    #     return tree
+    subnodes = tree.findall("node")
+    subcopy = subnodes[:]
+    for child in subnodes:
+        if isChecked(child):
+            tree.remove(child)
+            subcopy.remove(child)
+        # #print child.get("TEXT")
+        # print "pruning", child.get("TEXT")
+        # prunedChild = pruneChecked(child)
+        # if isChecked(prunedChild) is None:
+        #     print "removing", child.get("TEXT")
+        #     tree.remove(child)
+        #     subcopy.remove(child)
+    if len(subcopy) == 0:
+        return None
+    return tree
+
 def getSameNode(node, tree):
+    """
+    Finds a node in `tree` with the same TEXT as `node`
+    """
     textstr = "./node[@TEXT='" + node.get("TEXT") + "']"
     outlist = tree.findall(textstr)
     assert len(outlist) <= 1
@@ -59,6 +96,10 @@ def getSameNode(node, tree):
         return outlist[0]
 
 def mergeTrees(tree1, tree2):
+    """
+    Merges `tree1` with `tree2` using node TEXT. Nodes with same TEXT, found
+    using `getSameNode`, are merged recursively.
+    """
     subnodes2 = tree2.findall("node")
     for node2 in subnodes2:
         print node2.get("TEXT")
@@ -74,6 +115,11 @@ def mergeTrees(tree1, tree2):
     return tree1
 
 def pruneAndMerge(masterFile, newFile):
+    """
+    Prunes unchecked branches in `newFile`, then merges the remaining pruned
+    tree with `masterFile`. Both files are given as a string with the file
+    location.
+    """
     masterTree = ET.parse(masterFile)
     masterRoot = masterTree.getroot()
 
