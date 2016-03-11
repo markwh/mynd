@@ -71,6 +71,8 @@ def pruneChecked(tree):
         if isChecked(child):
             tree.remove(child)
             subcopy.remove(child)
+        else:
+            child = pruneChecked(child)
         # #print child.get("TEXT")
         # print "pruning", child.get("TEXT")
         # prunedChild = pruneChecked(child)
@@ -95,38 +97,33 @@ def getSameNode(node, tree):
     else:
         return outlist[0]
 
-def mergeTrees(tree1, tree2):
+def mergeBranches(branch1, branch2):
     """
-    Merges `tree1` with `tree2` using node TEXT. Nodes with same TEXT, found
+    Merges `branch1` with `branch2` using node TEXT. Nodes with same TEXT, found
     using `getSameNode`, are merged recursively.
     """
-    subnodes2 = tree2.findall("node")
+    subnodes2 = branch2.findall("node")
     for node2 in subnodes2:
         print node2.get("TEXT")
-        node1 = getSameNode(node2, tree1)
+        node1 = getSameNode(node2, branch1)
         if node1 is None:
-            tree1.append(node2)
+            branch1.append(node2)
         else:
             print "merging"
             print node1.get("TEXT")
-            newnode1 = mergeTrees(node1, node2)
-            tree1.remove(node1)
-            tree1.append(newnode1)
-    return tree1
+            newnode1 = mergeBranches(node1, node2)
+            branch1.remove(node1)
+            branch1.append(newnode1)
+    return branch1
 
-def pruneAndMerge(masterFile, newFile):
+def mergeTrees(masterRoot, newRoot):
     """
     Prunes unchecked branches in `newFile`, then merges the remaining pruned
     tree with `masterFile`. Both files are given as a string with the file
     location.
     """
-    masterTree = ET.parse(masterFile)
-    masterRoot = masterTree.getroot()
 
-    newTree = ET.parse(newFile)
-    newRoot = newTree.getroot()
     treename = newRoot.find("node").get("TEXT")
-    newPruned = pruneTree(newTree.getroot(), treename)
 
     if newPruned is None:
         print "No completed tasks to merge"
@@ -141,31 +138,57 @@ def pruneAndMerge(masterFile, newFile):
     newNode1 = newNodes[0]
 
     # Merge first node after root
-    newMaster1 = mergeTrees(masterNode1, newNode1)
+    newMaster1 = mergeBranches(masterNode1, newNode1)
     masterRoot.remove(masterNode1)
     masterRoot.append(newMaster1)
-    masterTree._setroot(masterRoot)
+    # masterTree._setroot(masterRoot)
 
-    # write to file
-    masterTree.write(masterFile)
-    formatter.format_file(masterFile)
+    return masterRoot
+
+def getTreeName(tree):
+    troot = tree.getroot()
+    trname = troot.find("node").get("TEXT")
+    return trname
 
 def main():
-    usage = """syncmm.py <master> <tomerge>
+    usage = """syncmm.py <map>
     Simple tool to merge checked mindmap nodes to a master task tracker.
     """
     parser = argparse.ArgumentParser(description = 'merge mindmap files')
-    parser.add_argument('master', type = str, help = 'location of mindmap ' + \
-                        'file in which to accumulate checked nodes')
-    parser.add_argument('tomerge', type = str, help = 'location of mindmap ' + \
-                        'file containing newly checked nodes')
+    parser.add_argument('map', type = str, help = 'location of mindmap ' + \
+                        'file to operate upon')
+    parser.add_argument('-u', help = 'keep only Unchecked nodes (default ' + \
+                        'is to keep only branches with checked nodes)',
+                        dest = 'unchecked', default = False,
+                        action = 'store_true')
+    parser.add_argument('-w', type = str, help = 'file to write output to')
+    parser.add_argument('-m', type = str, help = 'file to merge results into')
+
     args = parser.parse_args()
     # print type(args.master), args.tomerge, os.getcwd()
-    pruneAndMerge(masterFile = args.master, newFile = args.tomerge)
-
+    intree = ET.parse(args.map)
+    if args.unchecked:
+        # Prune away the checked nodes
+        prunedroot = pruneChecked(intree.getroot())
+    else:
+        # Prune away unchecked branches
+        prunedroot = pruneTree(intree.getroot(), getTreeName(intree))
+    if args.m is not None:
+        outfile = args.m
+        mergeInto = ET.parse(outfile)
+        outroot = mergeTrees(mergeInto.getroot(), prunedroot)
+    elif args.w is not None:
+        outfile = args.w
+        outroot = prunedroot
+    else:
+        outfile = args.map
+        outroot = prunedroot
+    intree._setroot(outroot)
+    intree.write(outfile)
+    formatter.format_file(outfile)
 
 if __name__ == "__main__":
-    sys.exit(main())
+   sys.exit(main())
 
 
 ##------------------------------
@@ -179,10 +202,19 @@ def testAll():
 
 def testMerge():
     print os.getcwd()
-    tree1 = ET.parse(os.environ["HOME"] + "/GoogleDrive/Docear/merge1.mm")
-    tree2 = ET.parse(os.environ["HOME"] + "/GoogleDrive/Docear/merge2.mm")
-    root1 = tree1.getroot()
-    root2 = tree2.getroot()
-    newroot = mergeTrees(root1, root2)
-    tree1._setroot(newroot)
-    tree1.write(os.environ["HOME"] + "/GoogleDrive/Docear/mergedTree.mm")
+    branch1 = ET.parse(os.environ["HOME"] + "/GoogleDrive/Docear/merge1.mm")
+    branch2 = ET.parse(os.environ["HOME"] + "/GoogleDrive/Docear/merge2.mm")
+    root1 = branch1.getroot()
+    root2 = branch2.getroot()
+    newroot = mergeBranches(root1, root2)
+    branch1._setroot(newroot)
+    branch1.write(os.environ["HOME"] + "/GoogleDrive/Docear/mergedTree.mm")
+
+def testPrune():
+    branch1 = ET.parse(os.environ["HOME"] + \
+    "/GoogleDrive/Docear/scripts/mapWithCheckedNodes.mm")
+    branch1_nocheck = pruneChecked(branch1)
+    branch1_nocheck.write(os.environ["HOME"] + \
+    "/GoogleDrive/Docear/scripts/noMoreCheckedNodes.mm")
+
+# testPrune()
