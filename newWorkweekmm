@@ -1,0 +1,10 @@
+#! /bin/bash
+
+MMDIR="$HOME/GoogleDrive/Docear/Tasklog"
+OLDMM="$MMDIR/$(date -dlast-friday +%Y%m%d)Weekend.mm"
+NEWMM="$MMDIR/$(date +%Y%m%d)Workweek.mm"
+
+echo $OLDMM
+echo $NEWMM
+
+mynd.py -u -w $NEWMM $OLDMM

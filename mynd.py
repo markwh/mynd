@@ -125,7 +125,7 @@ def mergeTrees(masterRoot, newRoot):
 
     treename = newRoot.find("node").get("TEXT")
 
-    if newPruned is None:
+    if newRoot is None:
         print "No completed tasks to merge"
         return
 
@@ -133,7 +133,7 @@ def mergeTrees(masterRoot, newRoot):
     masterNodes = masterRoot.findall("node")
     assert len(masterNodes) == 1
     masterNode1 = masterNodes[0]
-    newNodes = newPruned.findall("node")
+    newNodes = newRoot.findall("node")
     assert len(newNodes) == 1
     newNode1 = newNodes[0]
 
@@ -151,7 +151,7 @@ def getTreeName(tree):
     return trname
 
 def main():
-    usage = """syncmm.py <map>
+    usage = """mynd.py <map>
     Simple tool to merge checked mindmap nodes to a master task tracker.
     """
     parser = argparse.ArgumentParser(description = 'merge mindmap files')

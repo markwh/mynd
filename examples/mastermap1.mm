@@ -1,70 +1,84 @@
-<map version="docear 1.1" dcr_id="1455943687543_djo2tqxkh6i6z12rrcvfnbqio" project="14D923FE80E4TJ8S8BC3I5O2OWKG25LE36PW" project_last_home="file:/home/markwh/Docear/projects/Life">
-<!--To view this file, download Docear - The Academic Literature Suite from http://www.docear.org -->
-<node TEXT="mastermap1" FOLDED="false" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1457704540013"><hook NAME="MapStyle">
-    <properties show_note_icons="true"/>
+<map dcr_id="1455943687543_djo2tqxkh6i6z12rrcvfnbqio" project="14D923FE80E4TJ8S8BC3I5O2OWKG25LE36PW" project_last_home="file:/home/markwh/Docear/projects/Life" version="docear 1.1">
+
+<node CREATED="1283093380553" FOLDED="false" ID="ID_1723255651" MODIFIED="1457704540013" TEXT="mastermap1"><hook NAME="MapStyle">
+    <properties show_note_icons="true" />
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node">
 <stylenode LOCALIZED_TEXT="styles.predefined" POSITION="right">
-<stylenode LOCALIZED_TEXT="default" COLOR="#000000" STYLE="as_parent" MAX_WIDTH="600">
-<font NAME="SansSerif" SIZE="10" BOLD="false" ITALIC="false"/>
+<stylenode COLOR="#000000" LOCALIZED_TEXT="default" MAX_WIDTH="600" STYLE="as_parent">
+<font BOLD="false" ITALIC="false" NAME="SansSerif" SIZE="10" />
 </stylenode>
-<stylenode LOCALIZED_TEXT="defaultstyle.details"/>
-<stylenode LOCALIZED_TEXT="defaultstyle.note"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.details" />
+<stylenode LOCALIZED_TEXT="defaultstyle.note" />
 <stylenode LOCALIZED_TEXT="defaultstyle.floating">
-<edge STYLE="hide_edge"/>
-<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT"/>
+<edge STYLE="hide_edge" />
+<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT" />
 </stylenode>
 </stylenode>
 <stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="right">
-<stylenode LOCALIZED_TEXT="styles.topic" COLOR="#18898b" STYLE="fork">
-<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+<stylenode COLOR="#18898b" LOCALIZED_TEXT="styles.topic" STYLE="fork">
+<font BOLD="true" NAME="Liberation Sans" SIZE="10" />
 </stylenode>
-<stylenode LOCALIZED_TEXT="styles.subtopic" COLOR="#cc3300" STYLE="fork">
-<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+<stylenode COLOR="#cc3300" LOCALIZED_TEXT="styles.subtopic" STYLE="fork">
+<font BOLD="true" NAME="Liberation Sans" SIZE="10" />
 </stylenode>
-<stylenode LOCALIZED_TEXT="styles.subsubtopic" COLOR="#669900">
-<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+<stylenode COLOR="#669900" LOCALIZED_TEXT="styles.subsubtopic">
+<font BOLD="true" NAME="Liberation Sans" SIZE="10" />
 </stylenode>
 <stylenode LOCALIZED_TEXT="styles.important">
-<icon BUILTIN="yes"/>
+<icon BUILTIN="yes" />
 </stylenode>
 </stylenode>
 <stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="right">
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level.root" COLOR="#000000">
-<font SIZE="18"/>
+<stylenode COLOR="#000000" LOCALIZED_TEXT="AutomaticLayout.level.root">
+<font SIZE="18" />
 </stylenode>
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level,1" COLOR="#0033ff">
-<font SIZE="16"/>
+<stylenode COLOR="#0033ff" LOCALIZED_TEXT="AutomaticLayout.level,1">
+<font SIZE="16" />
 </stylenode>
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level,2" COLOR="#00b439">
-<font SIZE="14"/>
+<stylenode COLOR="#00b439" LOCALIZED_TEXT="AutomaticLayout.level,2">
+<font SIZE="14" />
 </stylenode>
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level,3" COLOR="#990000">
-<font SIZE="12"/>
+<stylenode COLOR="#990000" LOCALIZED_TEXT="AutomaticLayout.level,3">
+<font SIZE="12" />
 </stylenode>
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level,4" COLOR="#111111">
-<font SIZE="10"/>
+<stylenode COLOR="#111111" LOCALIZED_TEXT="AutomaticLayout.level,4">
+<font SIZE="10" />
 </stylenode>
 </stylenode>
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="5"/>
-<node TEXT="node1" POSITION="right" ID="ID_1508906957" CREATED="1455943696744" MODIFIED="1457704400652">
-<edge COLOR="#ff0000"/>
-<node TEXT="completed1" ID="ID_520266312" CREATED="1457704627863" MODIFIED="1457704646064">
-<icon BUILTIN="checked"/>
+<hook COUNTER="5" NAME="AutomaticEdgeColor" />
+<node CREATED="1457704582004" ID="ID_1269352195" MODIFIED="1457704586196" POSITION="right" TEXT="Previous work">
+<edge COLOR="#00ffff" />
+<node CREATED="1457704588459" ID="ID_1197983683" MODIFIED="1457905017273" TEXT="previous 2">
+<icon BUILTIN="checked" />
+</node>
+<node CREATED="1457704594981" ID="ID_1502707467" MODIFIED="1457905020214" TEXT="previous 3">
+<icon BUILTIN="checked" />
 </node>
 </node>
-<node TEXT="Previous work" POSITION="right" ID="ID_1269352195" CREATED="1457704582004" MODIFIED="1457704586196">
-<edge COLOR="#00ffff"/>
-<node TEXT="completed task 1" ID="ID_1197983683" CREATED="1457704588459" MODIFIED="1457704594490">
-<icon BUILTIN="checked"/>
+<node CREATED="1455943696744" ID="ID_1508906957" MODIFIED="1457704400652" POSITION="right" TEXT="node1">
+<edge COLOR="#ff0000" />
+<node CREATED="1457904975848" ID="ID_1663347110" MODIFIED="1457905013406" TEXT="previous 1">
+<icon BUILTIN="checked" />
 </node>
-<node TEXT="Completed task 2" ID="ID_1502707467" CREATED="1457704594981" MODIFIED="1457704602328">
-<icon BUILTIN="checked"/>
+<node CREATED="1455944268610" ID="ID_1364395506" MODIFIED="1457704417599" TEXT="node1.1">
+<node CREATED="1456088112088" ID="ID_1493021839" MODIFIED="1457904911444" TEXT="Checked node">
+<icon BUILTIN="checked" />
+<richcontent TYPE="DETAILS"><html><head /><body><p>
+Completed in: map1
+</p></body></html></richcontent></node>
 </node>
 </node>
+<node CREATED="1457673449490" ID="ID_1670611058" MODIFIED="1457704454601" POSITION="right" TEXT="node2">
+<icon BUILTIN="checked" />
+<edge COLOR="#00ff00" />
+<node CREATED="1457704455333" ID="ID_507611447" MODIFIED="1457904930537" TEXT="more nodes" />
+<richcontent TYPE="DETAILS"><html><head /><body><p>
+Completed in: map1
+</p></body></html></richcontent></node>
 </node>
 </map>

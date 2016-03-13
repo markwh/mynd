@@ -1,6 +1,6 @@
 <map dcr_id="1455943687543_djo2tqxkh6i6z12rrcvfnbqio" project="14D923FE80E4TJ8S8BC3I5O2OWKG25LE36PW" project_last_home="file:/home/markwh/Docear/projects/Life" version="docear 1.1">
 
-<node CREATED="1283093380553" FOLDED="false" ID="ID_1723255651" MODIFIED="1457704810614" TEXT="mastermap2"><hook NAME="MapStyle">
+<node CREATED="1283093380553" FOLDED="false" ID="ID_1723255651" MODIFIED="1457704428438" TEXT="map1"><hook NAME="MapStyle">
     <properties show_note_icons="true" />
 
 <map_styles>
@@ -51,17 +51,22 @@
 </map_styles>
 </hook>
 <hook COUNTER="4" NAME="AutomaticEdgeColor" />
-<node CREATED="1457704468641" ID="ID_1625825377" MODIFIED="1457704804145" POSITION="right" TEXT="previous unchecked">
-<edge COLOR="#ff00ff" />
-</node>
 <node CREATED="1455943696744" ID="ID_1508906957" MODIFIED="1457704400652" POSITION="right" TEXT="node1">
 <edge COLOR="#ff0000" />
 <node CREATED="1455944268610" ID="ID_1364395506" MODIFIED="1457704417599" TEXT="node1.1">
-<node CREATED="1457704406575" ID="ID_13170992" MODIFIED="1457704412337" TEXT="node1.1.2" />
+<node CREATED="1456088112088" ID="ID_1493021839" MODIFIED="1457904911444" TEXT="Checked node">
+<icon BUILTIN="checked" />
+<richcontent TYPE="DETAILS"><html><head /><body><p>
+Completed in: map1
+</p></body></html></richcontent></node>
 </node>
 </node>
-<node CREATED="1457704468641" ID="ID_1625825377" MODIFIED="1457904923028" POSITION="right" TEXT="unchecked node">
-<edge COLOR="#ff00ff" />
-</node>
+<node CREATED="1457673449490" ID="ID_1670611058" MODIFIED="1457704454601" POSITION="right" TEXT="node2">
+<icon BUILTIN="checked" />
+<edge COLOR="#00ff00" />
+<node CREATED="1457704455333" ID="ID_507611447" MODIFIED="1457904930537" TEXT="more nodes" />
+<richcontent TYPE="DETAILS"><html><head /><body><p>
+Completed in: map1
+</p></body></html></richcontent></node>
 </node>
 </map>
