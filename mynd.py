@@ -13,6 +13,15 @@ formatter = xmlformatter.Formatter()
 def isChecked(node):
     return node.find("./icon[@BUILTIN='checked']") is not None
 
+def modifyRootNodeText(root, newtext):
+    rootnode = root.find("node")
+    # print rootnode.get("TEXT")
+    rootnode.set("TEXT", newtext)
+    # print rootnode.get("TEXT")
+    # print ET.tostring(rootnode)
+    # rootnode.append()
+    return root
+
 def modifyDetails(node, newtext):
     """
     Add an html <p>newtext</p> entry in details of node
@@ -89,6 +98,8 @@ def getSameNode(node, tree):
     Finds a node in `tree` with the same TEXT as `node`
     """
     textstr = "./node[@TEXT='" + node.get("TEXT") + "']"
+    textstr = textstr.replace("'", "\'")
+    # print textstr
     outlist = tree.findall(textstr)
     assert len(outlist) <= 1
 
@@ -123,11 +134,11 @@ def mergeTrees(masterRoot, newRoot):
     location.
     """
 
-    treename = newRoot.find("node").get("TEXT")
-
     if newRoot is None:
         print "No completed tasks to merge"
-        return
+        return masterRoot
+
+    treename = newRoot.find("node").get("TEXT")
 
     # Only merge after root level
     masterNodes = masterRoot.findall("node")
@@ -163,32 +174,39 @@ def main():
                         action = 'store_true')
     parser.add_argument('-w', type = str, help = 'file to write output to')
     parser.add_argument('-m', type = str, help = 'file to merge results into')
+    parser.add_argument('-n', type = str, help = 'name of root node in new map')
 
     args = parser.parse_args()
     # print type(args.master), args.tomerge, os.getcwd()
     intree = ET.parse(args.map)
+    outroot = intree.getroot() # to be replaced depending on args
     if args.unchecked:
         # Prune away the checked nodes
         prunedroot = pruneChecked(intree.getroot())
+
     else:
         # Prune away unchecked branches
         prunedroot = pruneTree(intree.getroot(), getTreeName(intree))
+
     if args.m is not None:
         outfile = args.m
+        print outfile
         mergeInto = ET.parse(outfile)
         outroot = mergeTrees(mergeInto.getroot(), prunedroot)
     elif args.w is not None:
         outfile = args.w
-        outroot = prunedroot
     else:
         outfile = args.map
         outroot = prunedroot
+
+    if args.n is not None:
+        outroot = modifyRootNodeText(outroot, args.n)
     intree._setroot(outroot)
     intree.write(outfile)
     formatter.format_file(outfile)
 
 if __name__ == "__main__":
-   sys.exit(main())
+  sys.exit(main())
 
 
 ##------------------------------
@@ -212,9 +230,14 @@ def testMerge():
 
 def testPrune():
     branch1 = ET.parse(os.environ["HOME"] + \
-    "/GoogleDrive/Docear/scripts/mapWithCheckedNodes.mm")
+    "/GoogleDrive/Docear/scripts/examples/originals/map1.mm")
     branch1_nocheck = pruneChecked(branch1)
     branch1_nocheck.write(os.environ["HOME"] + \
     "/GoogleDrive/Docear/scripts/noMoreCheckedNodes.mm")
 
-# testPrune()
+def testFoo():
+    branch1 = ET.parse(os.environ["HOME"] + \
+    "/GoogleDrive/Docear/scripts/examples/originals/map1.mm")
+    modifyRootNodeText(branch1, "HI THERE")
+
+# testFoo()

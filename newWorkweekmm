@@ -1,10 +1,15 @@
 #! /bin/bash
 
 MMDIR="$HOME/GoogleDrive/Docear/Tasklog"
+MASTERMM="$MMDIR/TaskLog.mm"
 OLDMM="$MMDIR/$(date -dlast-friday +%Y%m%d)Weekend.mm"
+NEWNAME="$(date +%Y%m%d)Workweek"
 NEWMM="$MMDIR/$(date +%Y%m%d)Workweek.mm"
 
 echo $OLDMM
 echo $NEWMM
 
-mynd.py -u -w $NEWMM $OLDMM
+# Merge checked with master mindmap
+mynd.py -m $MASTERMM $OLDMM
+# Prune and write to new mindmap
+mynd.py -u -w $NEWMM -n $NEWNAME $OLDMM
