@@ -28,7 +28,7 @@ def modifyDetails(node, newtext):
     This is added before any existing html <p></p> entries
     """
     deets = node.find('richcontent[@TYPE="DETAILS"]')
-    print deets
+    # print deets
     if deets is None:
         htmlString = '<richcontent TYPE="DETAILS"><html><head></head>' + \
         '<body><p>\n%s\n</p></body></html></richcontent>' \
@@ -93,13 +93,17 @@ def pruneChecked(tree):
         return None
     return tree
 
+def sanitize(str):
+    out = str.replace("\'", "&#39;")
+    out = out.replace("\"", "&quot;")
+    return out
+
 def getSameNode(node, tree):
     """
     Finds a node in `tree` with the same TEXT as `node`
     """
-    textstr = "./node[@TEXT='" + node.get("TEXT") + "']"
+    textstr = "./node[@TEXT='" + sanitize(node.get("TEXT")) + "']"
     textstr = textstr.replace("'", "\'")
-    # print textstr
     outlist = tree.findall(textstr)
     assert len(outlist) <= 1
 
