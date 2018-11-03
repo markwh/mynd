@@ -15,10 +15,10 @@ def isChecked(node):
 
 def modifyRootNodeText(root, newtext):
     rootnode = root.find("node")
-    # print rootnode.get("TEXT")
+    # print(rootnode.get("TEXT"))
     rootnode.set("TEXT", newtext)
-    # print rootnode.get("TEXT")
-    # print ET.tostring(rootnode)
+    # print(rootnode.get("TEXT"))
+    # print(ET.tostring(rootnode))
     # rootnode.append()
     return root
 
@@ -28,7 +28,7 @@ def modifyDetails(node, newtext):
     This is added before any existing html <p></p> entries
     """
     deets = node.find('richcontent[@TYPE="DETAILS"]')
-    # print deets
+    # print(deets)
     if deets is None:
         htmlString = '<richcontent TYPE="DETAILS"><html><head></head>' + \
         '<body><p>\n%s\n</p></body></html></richcontent>' \
@@ -54,11 +54,11 @@ def pruneTree(tree, treename):
     subnodes = tree.findall("node")
     subcopy = subnodes[:]
     for child in subnodes:
-        #print child.get("TEXT")
-        print "pruning", child.get("TEXT")
+        #print(child.get("TEXT"))
+        print("pruning", child.get("TEXT"))
         prunedChild = pruneTree(child, treename)
         if prunedChild is None:
-            print "removing", child.get("TEXT")
+            print("removing", child.get("TEXT"))
             tree.remove(child)
             subcopy.remove(child)
     if len(subcopy) == 0:
@@ -82,11 +82,11 @@ def pruneChecked(tree):
             subcopy.remove(child)
         else:
             child = pruneChecked(child)
-        # #print child.get("TEXT")
-        # print "pruning", child.get("TEXT")
+        # #print(child.get("TEXT"))
+        # print("pruning", child.get("TEXT"))
         # prunedChild = pruneChecked(child)
         # if isChecked(prunedChild) is None:
-        #     print "removing", child.get("TEXT")
+        #     print("removing", child.get("TEXT"))
         #     tree.remove(child)
         #     subcopy.remove(child)
     if len(subcopy) == 0:
@@ -119,13 +119,13 @@ def mergeBranches(branch1, branch2):
     """
     subnodes2 = branch2.findall("node")
     for node2 in subnodes2:
-        print node2.get("TEXT")
+        print(node2.get("TEXT"))
         node1 = getSameNode(node2, branch1)
         if node1 is None:
             branch1.append(node2)
         else:
-            print "merging"
-            print node1.get("TEXT")
+            print("merging")
+            print(node1.get("TEXT"))
             newnode1 = mergeBranches(node1, node2)
             branch1.remove(node1)
             branch1.append(newnode1)
@@ -139,7 +139,7 @@ def mergeTrees(masterRoot, newRoot):
     """
 
     if newRoot is None:
-        print "No completed tasks to merge"
+        print("No completed tasks to merge")
         return masterRoot
 
     treename = newRoot.find("node").get("TEXT")
@@ -181,7 +181,7 @@ def main():
     parser.add_argument('-n', type = str, help = 'name of root node in new map')
 
     args = parser.parse_args()
-    # print type(args.master), args.tomerge, os.getcwd()
+    # print(type(args.master), args.tomerge, os.getcwd())
     intree = ET.parse(args.map)
     outroot = intree.getroot() # to be replaced depending on args
     if args.unchecked:
@@ -194,7 +194,7 @@ def main():
 
     if args.m is not None:
         outfile = args.m
-        print outfile
+        print(outfile)
         mergeInto = ET.parse(outfile)
         outroot = mergeTrees(mergeInto.getroot(), prunedroot)
     elif args.w is not None:
@@ -223,7 +223,7 @@ def testAll():
 
 
 def testMerge():
-    print os.getcwd()
+    print(os.getcwd())
     branch1 = ET.parse(os.environ["HOME"] + "/GoogleDrive/Docear/merge1.mm")
     branch2 = ET.parse(os.environ["HOME"] + "/GoogleDrive/Docear/merge2.mm")
     root1 = branch1.getroot()
